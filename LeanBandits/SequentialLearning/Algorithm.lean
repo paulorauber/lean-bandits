@@ -5,6 +5,7 @@ Authors: Rémy Degenne, Paulo Rauber
 -/
 import LeanBandits.ForMathlib.Measurable
 import LeanBandits.ForMathlib.Traj
+import LeanBandits.ForMathlib.CondDistrib
 import Mathlib.Probability.HasLaw
 
 /-!
@@ -186,7 +187,7 @@ lemma condDistrib_step [StandardBorelSpace α] [Nonempty α] [StandardBorelSpace
     (alg : Algorithm α R) (env : Environment α R) (n : ℕ) :
     condDistrib (step (n + 1)) (hist n) (trajMeasure alg env)
       =ᵐ[(trajMeasure alg env).map (hist n)] stepKernel alg env n :=
-  Kernel.condDistrib_trajMeasure_ae_eq_kernel
+  Kernel.condDistrib_trajMeasure
 
 lemma condDistrib_action [StandardBorelSpace α] [Nonempty α] [StandardBorelSpace R] [Nonempty R]
     (alg : Algorithm α R) (env : Environment α R) (n : ℕ) :
@@ -218,7 +219,7 @@ lemma hasLaw_step_zero (alg : Algorithm α R) (env : Environment α R) :
     rw [← Measure.deterministic_comp_eq_map (by fun_prop), Measure.comp_assoc,
       Kernel.deterministic_comp_eq_map, Kernel.traj_zero_map_eval_zero,
       Measure.deterministic_comp_eq_map, Measure.map_map (by fun_prop) (by fun_prop)]
-    simp
+    convert Measure.map_id using 1
 
 lemma hasLaw_action_zero (alg : Algorithm α R) (env : Environment α R) :
     HasLaw (action 0) alg.p0 (trajMeasure alg env) where
