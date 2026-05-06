@@ -14,7 +14,7 @@ namespace ProbabilityTheory.Kernel
 variable {α β γ : Type*} {mα : MeasurableSpace α} {mβ : MeasurableSpace β} {mγ : MeasurableSpace γ}
 
 @[simp]
-lemma prodMkLeft_eq_prodMkLeft [h_nonempty : Nonempty γ]
+lemma prodMkLeft_inj [h_nonempty : Nonempty γ]
     (κ ν : Kernel α β) :
     κ.prodMkLeft γ = ν.prodMkLeft γ ↔ κ = ν := by
   simp only [Kernel.ext_iff, Kernel.prodMkLeft_apply, Prod.forall]
