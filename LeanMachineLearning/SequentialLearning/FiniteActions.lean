@@ -197,8 +197,7 @@ lemma measurable_uncurry_pullCount_comp [Countable 𝓐] [MeasurableSingletonCla
     Measurable (fun ω ↦ pullCount A (f ω) (g ω) ω) := by
   change Measurable ((fun aω ↦ pullCount A aω.1 (g aω.2) aω.2) ∘ fun ω ↦ (f ω, ω))
   apply Measurable.comp _ (by fun_prop)
-  apply measurable_from_prod_countable_right
-  intro a
+  refine measurable_from_prod_countable_right fun a ↦ ?_
   change Measurable ((fun tω ↦ pullCount A a tω.1 tω.2) ∘ fun ω ↦ (g ω, ω))
   apply Measurable.comp _ (by fun_prop)
   exact measurable_from_prod_countable_right (fun t ↦ measurable_pullCount hA a t)
@@ -885,8 +884,7 @@ lemma measurable_uncurry_sumRewards_comp [Countable 𝓐] [MeasurableSingletonCl
     Measurable (fun ω ↦ sumRewards A R' (f ω) (g ω) ω) := by
   change Measurable ((fun aω ↦ sumRewards A R' aω.1 (g aω.2) aω.2) ∘ fun ω ↦ (f ω, ω))
   apply Measurable.comp _ (by fun_prop)
-  apply measurable_from_prod_countable_right
-  intro a
+  refine measurable_from_prod_countable_right fun a ↦ ?_
   change Measurable ((fun tω ↦ sumRewards A R' a tω.1 tω.2) ∘ fun ω ↦ (g ω, ω))
   apply Measurable.comp _ (by fun_prop)
   exact measurable_from_prod_countable_right (fun t ↦ measurable_sumRewards hA hR' a t)
@@ -901,7 +899,8 @@ lemma measurable_empMean [MeasurableSingletonClass 𝓐] {R' : ℕ → Ω → �
 @[fun_prop]
 lemma measurable_uncurry_empMean_comp [Countable 𝓐] [MeasurableSingletonClass 𝓐] {R' : ℕ → Ω → ℝ}
     (hA : ∀ n, Measurable (A n)) (hR' : ∀ n, Measurable (R' n)) {f : Ω → 𝓐} (hf : Measurable f)
-    {g : Ω → ℕ} (hg : Measurable g) : Measurable (fun ω ↦ empMean A R' (f ω) (g ω) ω) := by
+    {g : Ω → ℕ} (hg : Measurable g) :
+    Measurable (fun ω ↦ empMean A R' (f ω) (g ω) ω) := by
   unfold empMean
   fun_prop
 
