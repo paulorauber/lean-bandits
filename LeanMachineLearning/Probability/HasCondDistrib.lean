@@ -254,8 +254,8 @@ lemma HasCondDistrib.prod [IsFiniteMeasure μ] [IsFiniteKernel κ]
   rfl
 
 lemma HasCondDistrib.hasCondDistrib_sectR [IsFiniteMeasure μ] [StandardBorelSpace β] [Nonempty β]
-    {W : α → Ω'} {Z : α → γ} {f : Ω' → β} {g : Ω' → Ω} {η : Kernel (γ × β) Ω} [IsFiniteKernel η]
-    (hf : Measurable f) (hg : Measurable g) (hW : AEMeasurable W μ)
+    {W : α → Ω'} {Z : α → γ} {f : Ω' → β} {g : Ω' → Ω} {η : Kernel (γ × β) Ω} (hf : Measurable f)
+    (hg : Measurable g) (hW : AEMeasurable W μ)
     (hcd : HasCondDistrib (g ∘ W) (fun a ↦ (Z a, (f ∘ W) a)) η μ) :
     ∀ᵐ z ∂(μ.map Z), HasCondDistrib g f (η.sectR z) (condDistrib W Z μ z) := by
   have h_eq : condDistrib (g ∘ W) (fun a ↦ (Z a, (f ∘ W) a)) μ

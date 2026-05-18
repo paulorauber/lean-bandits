@@ -190,7 +190,7 @@ lemma hasLaw_IT_action_zero (h : IsBayesAlgEnvSeq Q κ alg E A R' P) :
     rw [← Kernel.map_apply _ (IT.measurable_action 0), ← hc,
       show IT.action 0 ∘ trajectory A R' = A 0 from rfl, hcd, Kernel.const_apply]⟩
 
-lemma hasCondDistrib_IT_feedback_zero [IsFiniteKernel κ] (h : IsBayesAlgEnvSeq Q κ alg E A R' P) :
+lemma hasCondDistrib_IT_feedback_zero (h : IsBayesAlgEnvSeq Q κ alg E A R' P) :
     ∀ᵐ e ∂Q, HasCondDistrib (IT.feedback 0) (IT.action 0) (κ.sectR e)
       (condDistrib (trajectory A R') E P e) := by
   rw [← h.hasLaw_env.map_eq]
