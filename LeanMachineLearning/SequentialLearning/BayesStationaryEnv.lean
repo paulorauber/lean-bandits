@@ -194,7 +194,7 @@ lemma hasCondDistrib_IT_feedback_zero [IsFiniteKernel κ] (h : IsBayesAlgEnvSeq 
     ∀ᵐ e ∂Q, HasCondDistrib (IT.feedback 0) (IT.action 0) (κ.sectR e)
       (condDistrib (trajectory A R') E P e) := by
   rw [← h.hasLaw_env.map_eq]
-  exact h.hasCondDistrib_feedback_zero.ae_hasCondDistrib_sectR
+  exact h.hasCondDistrib_feedback_zero.hasCondDistrib_sectR
     (IT.measurable_action 0) (IT.measurable_feedback 0)
     (measurable_trajectory h.measurable_action h.measurable_feedback).aemeasurable
 
@@ -202,7 +202,7 @@ lemma hasCondDistrib_IT_action (h : IsBayesAlgEnvSeq Q κ alg E A R' P) (n : ℕ
     ∀ᵐ e ∂Q, HasCondDistrib (IT.action (n + 1)) (IT.hist n) (alg.policy n)
       (condDistrib (trajectory A R') E P e) := by
   rw [← h.hasLaw_env.map_eq]
-  filter_upwards [(h.hasCondDistrib_action n).ae_hasCondDistrib_sectR
+  filter_upwards [(h.hasCondDistrib_action n).hasCondDistrib_sectR
     (IT.measurable_hist n) (IT.measurable_action (n + 1))
     (measurable_trajectory h.measurable_action h.measurable_feedback).aemeasurable] with _ he
   rwa [Kernel.sectR_prodMkLeft] at he
@@ -217,7 +217,7 @@ lemma hasCondDistrib_IT_feedback [IsFiniteKernel κ] (h : IsBayesAlgEnvSeq Q κ 
       (κ.comap (fun (e, _, a) ↦ (e, a)) (by fun_prop)) P :=
     (h.hasCondDistrib_feedback n).comp_right (MeasurableEquiv.prodAssoc.symm.trans
       ((MeasurableEquiv.prodCongr .prodComm (.refl _)).trans .prodAssoc))
-  exact hc.ae_hasCondDistrib_sectR ((IT.measurable_hist n).prodMk
+  exact hc.hasCondDistrib_sectR ((IT.measurable_hist n).prodMk
     (IT.measurable_action (n + 1))) (IT.measurable_feedback (n + 1))
     (measurable_trajectory h.measurable_action h.measurable_feedback).aemeasurable
 
