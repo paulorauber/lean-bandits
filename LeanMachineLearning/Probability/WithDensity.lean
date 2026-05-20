@@ -28,16 +28,15 @@ lemma map_withDensity_comp {g : α → γ} {f : γ → ℝ≥0∞} (hg : Measura
 
 lemma map_equiv_withDensity {e : α ≃ᵐ β} {f : α → ℝ≥0∞} (hf : Measurable f) :
     (μ.withDensity f).map e = (μ.map e).withDensity (f ∘ e.symm) := by
-  rw [← map_withDensity_comp e.measurable (hf.comp e.symm.measurable)]
-  congr
-  ext a
-  simp
+  simp_rw [← map_withDensity_comp e.measurable (hf.comp e.symm.measurable),
+    Function.comp_assoc, MeasurableEquiv.symm_comp_self]
+  rfl
 
-lemma map_swap_withDensity_fst {μ : Measure (α × β)} {f : β → ℝ≥0∞} (hf : Measurable f) :
+lemma map_swap_withDensity_comp_snd {μ : Measure (α × β)} {f : β → ℝ≥0∞} (hf : Measurable f) :
     (μ.withDensity (f ∘ Prod.snd)).map Prod.swap =
       (μ.map Prod.swap).withDensity (f ∘ Prod.fst) := by
   rw [← map_withDensity_comp measurable_swap (hf.comp measurable_fst)]
-  congr
+  rfl
 
 end MeasureTheory
 
