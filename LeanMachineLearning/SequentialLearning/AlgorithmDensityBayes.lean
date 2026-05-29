@@ -9,7 +9,24 @@ public import LeanMachineLearning.SequentialLearning.AlgorithmDensity
 public import LeanMachineLearning.SequentialLearning.BayesStationaryEnv
 
 /-!
-# Algorithm density under `IsBayesAlgEnvSeq`
+# Algorithm density under Bayesian stationary environments
+
+This file provides results about `Algorithm.density` for the Bayesian stationary environment
+setting.
+
+## Main results
+
+Let `h : IsBayesAlgEnvSeq Q κ alg E A Y P`, `h₀ : IsBayesAlgEnvSeq Q κ alg₀ E₀ A₀ Y₀ P₀`, and
+`hc : alg ≪ₐ alg₀`.
+
+* `hasLaw_hist_withDensity h h₀ hc n`: the law of the history at time `n` under `P` is the law of
+  the history at time `n` under `P₀` with density `alg.density alg₀ n`. Intuitively, the law of the
+  history under `alg` can be obtained from the law of the history under `alg₀` when they are
+  interacting with underlying stationary environments drawn from the same distribution.
+* `hasCondDistrib_env_hist h h₀ hc n`: the conditional distribution of `E` given the history at time
+  `n` under `P` is almost everywhere equal to the conditional distribution of `E₀` given the history
+  at time `n` under `P₀`. Intuitively, the posterior is independent of the algorithm used to observe
+  the history.
 
 -/
 
