@@ -8,6 +8,10 @@ module
 public import Mathlib.MeasureTheory.Measure.AbsolutelyContinuous
 public import LeanMachineLearning.MeasureTheory.OuterMeasure.Basic
 
+/-!
+# Lemma about measures that assign non-zero probability to every singleton.
+-/
+
 @[expose] public section
 
 variable {α : Type*}

@@ -7,6 +7,11 @@ module
 
 public import Mathlib.MeasureTheory.OuterMeasure.Basic
 
+/-!
+# Lemma about measures that assign non-zero probability to every singleton.
+
+-/
+
 @[expose] public section
 
 open scoped ENNReal

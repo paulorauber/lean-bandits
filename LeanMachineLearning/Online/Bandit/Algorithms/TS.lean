@@ -332,10 +332,9 @@ lemma integral_sum_range_actionMean_bestAction_sub_ucb_bestAction_le {alg : Algo
         simp_rw [sum_const, card_range, nsmul_eq_mul, setIntegral_const, smul_eq_mul]
     _ ≤ ((n - 1) * δ) * (n * (u - l)) := by
         gcongr
-        · nlinarith
-        · have : (1 : ℝ) ≤ n := by simp [Nat.one_le_iff_ne_zero, hn]
-          apply ENNReal.toReal_le_of_le_ofReal (by nlinarith)
-          exact h.prob_empMean_bestAction_sub_actionMean_le_le hσ2 hs hδ n
+        have : (1 : ℝ) ≤ n := by simp [Nat.one_le_iff_ne_zero, hn]
+        apply ENNReal.toReal_le_of_le_ofReal (by nlinarith)
+        exact h.prob_empMean_bestAction_sub_actionMean_le_le hσ2 hs hδ n
     _ = _ := by
       ring
 
@@ -449,7 +448,7 @@ lemma integral_regret_eq_add (hK : 0 < K) (h : IsBayesAlgEnvSeq Q κ (tsAlgorith
     _  = (∑ t ∈ range n, ∫ ω, actionMean κ E (bestAction κ E ω) ω ∂P) -
             ∑ t ∈ range n, ∫ ω, actionMean κ E (A t ω) ω ∂P := by
         simp_rw [IsBayesAlgEnvSeq.regret_eq_sum_gap, IsBayesAlgEnvSeq.gap_eq_sub]
-        rw [integral_finset_sum _ (by fun_prop), ← Finset.sum_sub_distrib]
+        rw [integral_finsetSum _ (by fun_prop), ← Finset.sum_sub_distrib]
         simp_rw [integral_sub hab (haa _)]
     _ = ((∑ t ∈ range n, ∫ ω, actionMean κ E (bestAction κ E ω) ω ∂P) -
             ∑ t ∈ range n, ∫ ω, ucb A R l u σ2 δ (bestAction κ E ω) t ω ∂P) +
@@ -463,7 +462,7 @@ lemma integral_regret_eq_add (hK : 0 < K) (h : IsBayesAlgEnvSeq Q κ (tsAlgorith
         rw [← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib]
         simp_rw [← integral_sub hab (hub _), ← integral_sub (hua _) (haa _)]
     _ = _ := by
-        rw [← integral_finset_sum _ (by fun_prop), ← integral_finset_sum _ (by fun_prop)]
+        rw [← integral_finsetSum _ (by fun_prop), ← integral_finsetSum _ (by fun_prop)]
 
 lemma integral_regret_le (hK : 0 < K) (h : IsBayesAlgEnvSeq Q κ (tsAlgorithm hK Q κ) E A R P)
     (hlu : l ≤ u) (hm : ∀ e a, (κ (e, a))[id] ∈ (Set.Icc l u)) (hσ2 : 0 < σ2)

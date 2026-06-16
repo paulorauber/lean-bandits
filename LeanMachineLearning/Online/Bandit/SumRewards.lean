@@ -454,9 +454,8 @@ lemma prob_sumRewards_sub_pullCount_mul_ge_le [Countable 𝓐] {σ2 : ℝ≥0} (
     _ ≤ ∑ m ∈ Icc 1 (n - 1), ENNReal.ofReal δ := by
       apply sum_le_sum
       intro m hm
-      convert StreamMeasure.prob_sum_range_sub_ge_le_of_HasSubgaussianMGF' hσ2 ha hδ
-        (mem_Icc.mp hm).1 using 2
-      simp [B]
+      exact le_of_eq_of_le (by simp [B])
+        (StreamMeasure.prob_sum_range_sub_ge_le_of_HasSubgaussianMGF' hσ2 ha hδ (mem_Icc.mp hm).1)
     _ = ENNReal.ofReal ((n - 1) * δ) := by
       by_cases hn : n = 0
       · simp [hn, hδ.le]
@@ -490,9 +489,8 @@ lemma prob_sumRewards_sub_pullCount_mul_le_le [Countable 𝓐] {σ2 : ℝ≥0} (
     _ ≤ ∑ m ∈ Icc 1 (n - 1), ENNReal.ofReal δ := by
       apply sum_le_sum
       intro m hm
-      convert StreamMeasure.prob_sum_range_sub_le_le_of_HasSubgaussianMGF' hσ2 ha hδ
-        (mem_Icc.mp hm).1 using 2
-      simp [B]
+      exact le_of_eq_of_le (by simp [B])
+        (StreamMeasure.prob_sum_range_sub_le_le_of_HasSubgaussianMGF' hσ2 ha hδ (mem_Icc.mp hm).1)
     _ = ENNReal.ofReal ((n - 1) * δ) := by
       by_cases hn : n = 0
       · simp [hn, hδ.le]

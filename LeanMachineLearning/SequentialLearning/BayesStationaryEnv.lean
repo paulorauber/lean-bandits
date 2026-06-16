@@ -193,7 +193,7 @@ lemma integrable_regret [Countable 𝓐] [Nonempty 𝓐] {κ : Kernel (𝓔 × �
     (hA : ∀ t, Measurable (A t)) {l u : ℝ} (h : ∀ e a, (κ (e, a))[id] ∈ Set.Icc l u) :
     Integrable (regret κ E A n) P := by
   rw [regret_eq_sum_gap']
-  exact integrable_finset_sum _ (fun _ _ ↦ integrable_gap hE hA h)
+  exact integrable_finsetSum _ (fun _ _ ↦ integrable_gap hE hA h)
 
 end Real
 
@@ -303,7 +303,7 @@ variable {alg : Algorithm 𝓐 𝓨} {A : ℕ → Ω → 𝓐} {Y : ℕ → Ω �
 variable {P : Measure Ω} [IsProbabilityMeasure P]
 
 lemma IsAlgEnvSeq.isBayesAlgEnvSeq
-    (h : IsAlgEnvSeq A Y (alg.prod_left 𝓔) (bayesStationaryEnv Q κ) P) :
+    (h : IsAlgEnvSeq A Y (alg.prodLeft 𝓔) (bayesStationaryEnv Q κ) P) :
     IsBayesAlgEnvSeq Q κ alg (fun ω ↦ (Y 0 ω).1) A (fun n ω ↦ (Y n ω).2) P where
   measurable_E := (h.measurable_feedback 0).fst
   measurable_action := h.measurable_action
@@ -314,7 +314,7 @@ lemma IsAlgEnvSeq.isBayesAlgEnvSeq
   hasCondDistrib_action_zero := by
     have hc : HasCondDistrib (fun ω ↦ (Y 0 ω).1) (A 0) (Kernel.const _ Q) P := by
       simpa [bayesStationaryEnv] using h.hasCondDistrib_feedback_zero.fst
-    simpa [h.hasLaw_action_zero.map_eq, Algorithm.prod_left] using hc.const_map_of_const
+    simpa [h.hasLaw_action_zero.map_eq, Algorithm.prodLeft] using hc.const_map_of_const
   hasCondDistrib_feedback_zero :=
     h.hasCondDistrib_feedback_zero.of_compProd.comp_right MeasurableEquiv.prodComm
   hasCondDistrib_action n := by
@@ -330,7 +330,8 @@ lemma IsAlgEnvSeq.isBayesAlgEnvSeq
     have hc : HasCondDistrib (fun ω ↦ (Y (n + 1) ω).2)
         (fun ω ↦ (IsAlgEnvSeq.hist A Y n ω, A (n + 1) ω))
         ((Kernel.prodMkLeft ((Iic n) → 𝓐 × 𝓨) κ).comap f (by fun_prop)) P := by
-      simpa [bayesStationaryEnv, Kernel.snd_prod] using (h.hasCondDistrib_feedback n).snd
+      simpa [bayesStationaryEnv, Kernel.prodMkLeft, ← Kernel.comap_comp_right, Function.comp_def]
+        using (h.hasCondDistrib_feedback n).snd
     exact hc.comp_right' (by fun_prop)
 
 end IsAlgEnvSeq
@@ -342,7 +343,7 @@ namespace IT
 noncomputable
 def bayesTrajMeasure (Q : Measure 𝓔) [IsProbabilityMeasure Q] (κ : Kernel (𝓔 × 𝓐) 𝓨)
     [IsMarkovKernel κ] (alg : Algorithm 𝓐 𝓨) : Measure (ℕ → 𝓐 × 𝓔 × 𝓨) :=
-  trajMeasure (alg.prod_left 𝓔) (bayesStationaryEnv Q κ)
+  trajMeasure (alg.prodLeft 𝓔) (bayesStationaryEnv Q κ)
 deriving IsProbabilityMeasure
 
 lemma isBayesAlgEnvSeq_bayesTrajMeasure
