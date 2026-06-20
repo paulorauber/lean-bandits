@@ -45,7 +45,6 @@ deriving IsProbabilityMeasure
 section ModelEquivalence
 
 variable {Ω Ω' : Type*} {mΩ : MeasurableSpace Ω} {mΩ' : MeasurableSpace Ω'}
-  [StandardBorelSpace 𝓐] [Nonempty 𝓐] [StandardBorelSpace 𝓨] [Nonempty 𝓨]
   {alg : Algorithm 𝓐 𝓨} {env : Environment 𝓐 𝓨}
   {P : Measure Ω} [IsProbabilityMeasure P] {P' : Measure Ω'} [IsProbabilityMeasure P']
   {A₁ : ℕ → Ω → 𝓐} {R₁ : ℕ → Ω → 𝓨} {A₂ : ℕ → Ω' → 𝓐} {R₂ : ℕ → Ω' → 𝓨} {N : ℕ}
@@ -53,8 +52,8 @@ variable {Ω Ω' : Type*} {mΩ : MeasurableSpace Ω} {mΩ' : MeasurableSpace Ω'
 lemma eq_trajMeasure_of_isAlgEnvSeq (h : IsAlgEnvSeq A₁ R₁ alg env P) :
     P.map (fun ω n ↦ (A₁ n ω, R₁ n ω)) = trajMeasure alg env := by
   rw [trajMeasure]
-  have h := Kernel.eq_trajMeasure (Y := fun n ω ↦ (A₁ n ω, R₁ n ω)) (P := P)
-    (μ₀ := alg.p0 ⊗ₘ env.ν0) (κ := stepKernel alg env) (fun n ↦ ?_) ?_ (fun n ↦ ?_)
+  have h := (Kernel.hasLaw_trajMeasure (Y := fun n ω ↦ (A₁ n ω, R₁ n ω)) (P := P)
+    (μ₀ := alg.p0 ⊗ₘ env.ν0) (κ := stepKernel alg env) (fun n ↦ ?_) ?_ (fun n ↦ ?_)).map_eq
   · exact h
   · have hA := h.measurable_action n
     have hR := h.measurable_feedback n
